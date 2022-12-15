@@ -1,0 +1,6 @@
+#weighted knn 
+from sklearn.neighbors import KNeighborsClassifier as KNN 
+from sklearn import datasets 
+iris=datasets.load_iris() 
+wknn=KNN(n_neighbors=7,weights='distance') 
+wknn.fit(iris['data'],iris['target']) 
