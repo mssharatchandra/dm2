@@ -1,0 +1,35 @@
+import pandas as pd 
+import io 
+import numpy as np 
+df = pd.read_csv("weather.csv") 
+def compute_impurity(feature, impurity_criterion): 
+ probs = feature.value_counts(normalize=True) 
+ impurity = -1 * np.sum(np.log2(probs) * probs) 
+ return(round(impurity, 3)) 
+def comp_feature_information_gain(df, target, descriptive_feature, split_criterion): 
+ print('target feature:', target) 
+ print('descriptive_feature:', descriptive_feature) 
+ print('split criterion:', split_criterion) 
+ 
+ target_entropy = compute_impurity(df[target], split_criterion) 
+ entropy_list = list() 
+ weight_list = list() 
+ for level in df[descriptive_feature].unique(): 
+ df_feature_level = df[df[descriptive_feature] == level] 
+ entropy_level = compute_impurity(df_feature_level[target], split_criterion) 
+ entropy_list.append(round(entropy_level, 3)) 
+ weight_level = len(df_feature_level) / len(df) 
+ weight_list.append(round(weight_level, 3)) 
+ print('impurity of partitions:', entropy_list) 
+ print('weights of partitions:', weight_list) 
+ feature_remaining_impurity = np.sum(np.array(entropy_list) * np.array(weight_list)) 
+ print('remaining impurity:', feature_remaining_impurity)
+ 
+  information_gain = target_entropy - feature_remaining_impurity 
+ print('information gain:', information_gain) 
+ 
+ print('====================') 
+ return(information_gain) 
+split_criterion = 'entropy' 
+for feature in df.drop(columns='play').columns: 
+ feature_info_gain = comp_feature_information_gain(df, 'play', feature, split_criterion) 
