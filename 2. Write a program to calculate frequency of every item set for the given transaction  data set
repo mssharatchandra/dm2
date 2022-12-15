@@ -1,0 +1,6 @@
+sample = {'T1' : ['A','C','D'], 'T2':['B','C','D'], 'T3':['A','B','C','D'], 'T4':['B','D'], 'T5':['A','B','C','D']} 
+result = dict() 
+for elements in sample.values(): 
+ for ele in elements: 
+ result[ele] = result.get(ele, 0) + 1 
+print(result) 
