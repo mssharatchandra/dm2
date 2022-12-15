@@ -1,0 +1,13 @@
+pip install pyclustering 
+from pyclustering.cluster.kmedoids import kmedoids 
+from pyclustering.cluster import cluster_visualizer 
+from pyclustering.utils import read_sample 
+from pyclustering.samples.definitions import FCPS_SAMPLES 
+sample = read_sample(FCPS_SAMPLES.SAMPLE_TWO_DIAMONDS) 
+initial_medoids = [1, 500] 
+kmedoids_instance = kmedoids(sample, initial_medoids) 
+kmedoids_instance.process() 
+clusters = kmedoids_instance.get_clusters() 
+visualizer = cluster_visualizer() 
+visualizer.append_clusters(clusters, sample) 
+visualizer.show()
