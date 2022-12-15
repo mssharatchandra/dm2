@@ -1,0 +1,15 @@
+pip install pyclustering 
+from pyclustering.cluster.xmeans import xmeans 
+from pyclustering.cluster.center_initializer import kmeans_plusplus_initializer 
+from pyclustering.utils.metric import distance_metric, type_metric 
+from pyclustering.utils import read_sample 
+from pyclustering.samples.definitions import FAMOUS_SAMPLES 
+from pyclustering.cluster import cluster_visualizer_multidim as vis 
+sample_4d = read_sample(FAMOUS_SAMPLES.SAMPLE_IRIS) 
+centers = kmeans_plusplus_initializer(sample_4d, 3).initialize() 
+xmeans_instance = xmeans(sample_4d, centers, metric = distance_metric(type_metric.MANHATTAN)) 
+xmeans_instance.process() 
+clusters = xmeans_instance.get_clusters() 
+visualizer = vis() 
+visualizer.append_clusters(clusters, sample_4d) 
+visualizer.show(max_row_size=3) 
