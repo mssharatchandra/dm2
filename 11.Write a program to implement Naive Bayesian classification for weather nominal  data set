@@ -1,0 +1,17 @@
+pip install category_encoders 
+from sklearn.naive_bayes import GaussianNB 
+from sklearn.model_selection import train_test_split 
+import category_encoders as ce 
+import pandas as pd 
+from sklearn import metrics 
+weather = pd.read_csv('weather.csv') 
+X = weather.iloc[:,:-1] 
+y = weather.iloc[:, -1] 
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4, random_state=1) 
+encoder = ce.OneHotEncoder(cols=['outlook', 'temperature', 'humidity','windy']) 
+X_train = encoder.fit_transform(X_train) 
+X_test = encoder.transform(X_test)
+gnb = GaussianNB()
+gnb.fit(X_train, y_train) 
+y_pred = gnb.predict(X_test) 
+print("Gaussian Naive Bayes model accuracy(in %):", metrics.accuracy_score(y_test, y_pred)*100) 
