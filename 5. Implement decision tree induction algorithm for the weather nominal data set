@@ -1,0 +1,11 @@
+#desicion tree for weather nominal data set 
+from sklearn import tree 
+import pandas as pd 
+df = pd.read_csv('weather.csv') 
+df.columns = ['outlook', 'temperature', 'humidity','windy','play'] 
+X = df.drop("play",axis=1) #Feature Matrix 
+Y = df["play"] #Target Variable 
+clf=tree.DecisionTreeClassifier() 
+X_new = pd.get_dummies(X) 
+clf.fit(X_new,Y) 
+tree.plot_tree(clf) 
