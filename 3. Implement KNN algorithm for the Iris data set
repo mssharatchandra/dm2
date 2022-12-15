@@ -1,0 +1,14 @@
+#knn (manhattan) 
+from sklearn.neighbors import KNeighborsClassifier as KNN 
+from sklearn import datasets 
+iris=datasets.load_iris() 
+knnm=KNN(n_neighbors=7,p=1) 
+knnm.fit(iris['data'],iris['target']) 
+
+#knn (euclidian)
+from sklearn.neighbors import KNeighborsClassifier as KNN 
+from sklearn import datasets 
+iris=datasets.load_iris() 
+knne=KNN(n_neighbors=7) 
+knne.fit(iris['data'],iris['target']) 
+
