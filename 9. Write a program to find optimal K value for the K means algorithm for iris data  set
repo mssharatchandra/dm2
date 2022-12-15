@@ -1,0 +1,17 @@
+from sklearn.datasets import load_iris 
+from sklearn.cluster import KMeans 
+import matplotlib.pyplot as plt 
+iris_data=load_iris() 
+iris_df = pd.DataFrame(iris_data.data, columns = iris_data.feature_names) 
+x=iris_data.data 
+wcss = [] 
+for i in range(1, 11): 
+ kmeans = KMeans(n_clusters=i,init = 'k-means++', max_iter = 100, n_init = 10, random_state = 0) 
+ kmeans.fit_predict(x) 
+ wcss.append(kmeans.inertia_) 
+plt.plot(range(1, 11), wcss) 
+plt.title('The elbow method') 
+plt.xlabel('Number of clusters') 
+plt.ylabel('WCSS') 
+plt.show() 
+#The elbow point is 3 which is equal to the optimal k value
